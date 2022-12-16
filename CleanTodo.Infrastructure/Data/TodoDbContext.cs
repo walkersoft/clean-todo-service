@@ -14,9 +14,8 @@ namespace CleanTodo.Infrastructure.Data
         public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<TodoTag> TodoTags { get; set; }
 
-        public TodoDbContext()
+        public TodoDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) => 
