@@ -13,11 +13,11 @@ namespace CleanTodo.Core.Entities
         public DateTime DueDate { get; set; }
         public DateTime? ActivationDate { get; set; }
         public DateTime? CompletionDate { get; set; }
-        public List<TodoItem> TodoItems { get; private set; }
+        public ICollection<TodoItem> TodoItems { get; private set; }
 
         public TodoList()
         {
-            TodoItems = new();
+            TodoItems = new List<TodoItem>();
         }
     }
 }

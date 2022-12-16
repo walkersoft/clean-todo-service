@@ -15,11 +15,11 @@ namespace CleanTodo.Core.Entities
         public int RollOverCount { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? CompletionDate { get; set; }
-        public List<TodoTag> Tags { get; private set; }
+        public ICollection<TodoTag> Tags { get; private set; }
 
         public TodoItem()
         {
-            Tags = new();
+            Tags = new List<TodoTag>();
         }
     }
 }

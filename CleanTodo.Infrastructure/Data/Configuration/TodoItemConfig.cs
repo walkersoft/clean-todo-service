@@ -15,7 +15,10 @@ namespace CleanTodo.Infrastructure.Data.Configuration
         {
             builder.Property(x => x.Description).HasMaxLength(500);
             builder.Property(x => x.DueDate).HasDefaultValue(DateTime.Now);
-            builder.HasMany(x => x.Tags);
+
+            builder.HasMany(x => x.Tags)
+                .WithMany(x => x.TodoItems)
+                .UsingEntity(e => e.ToTable("TodoItemTags"));
         }
     }
 }
