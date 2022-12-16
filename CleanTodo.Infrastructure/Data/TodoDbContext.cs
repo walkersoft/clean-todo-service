@@ -1,5 +1,6 @@
 ﻿using CleanTodo.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,12 @@ namespace CleanTodo.Infrastructure.Data
 
         public TodoDbContext(DbContextOptions options) : base(options)
         {
+            
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
             base.OnConfiguring(options);
+        }
     }
 }

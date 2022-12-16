@@ -3,10 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-IConfiguration configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", false, true)
-    .Build();
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -15,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TodoDbContext>(options =>
 {
-    options.UseSqlServer(configuration.GetConnectionString("TodoDatabase"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TodoDatabase"));
 });
 
 var app = builder.Build();
