@@ -20,7 +20,7 @@ namespace CleanTodo.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("CleanTodo.Core.Entities.TodoItem", b =>
                 {
@@ -57,7 +57,7 @@ namespace CleanTodo.Infrastructure.Migrations
 
                     b.HasIndex("TodoListId");
 
-                    b.ToTable("TodoItems");
+                    b.ToTable("TodoItems", (string)null);
                 });
 
             modelBuilder.Entity("CleanTodo.Core.Entities.TodoList", b =>
@@ -84,7 +84,7 @@ namespace CleanTodo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoLists");
+                    b.ToTable("TodoLists", (string)null);
                 });
 
             modelBuilder.Entity("CleanTodo.Core.Entities.TodoTag", b =>
@@ -99,7 +99,7 @@ namespace CleanTodo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoTags");
+                    b.ToTable("TodoTags", (string)null);
                 });
 
             modelBuilder.Entity("TodoItemTodoTag", b =>
@@ -114,7 +114,7 @@ namespace CleanTodo.Infrastructure.Migrations
 
                     b.HasIndex("TodoItemsId");
 
-                    b.ToTable("TodoItemTodoTag");
+                    b.ToTable("TodoItemTodoTag", (string)null);
                 });
 
             modelBuilder.Entity("CleanTodo.Core.Entities.TodoItem", b =>
