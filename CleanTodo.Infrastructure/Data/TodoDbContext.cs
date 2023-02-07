@@ -17,7 +17,6 @@ namespace CleanTodo.Infrastructure.Data
 
         public TodoDbContext(DbContextOptions options) : base(options)
         {
-            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
