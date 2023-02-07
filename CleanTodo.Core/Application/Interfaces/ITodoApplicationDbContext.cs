@@ -9,6 +9,7 @@ namespace CleanTodo.Core.Application.Interfaces
 {
     public interface ITodoApplicationDbContext
     {
-        T Add<T>(T entity) where T : BaseEntity;
+        Task SaveChangesAsync();
+        void Add<T>(T entity) where T : BaseEntity;
     }
 }
