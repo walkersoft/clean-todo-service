@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace CleanTodo.Core.Application.Interfaces
 {
     public interface ITodoApplicationDbContext
     {
+        DbSet<TodoItem> TodoItems { get; }
+        DbSet<TodoList> TodoLists { get; }
+        DbSet<TodoTag> TodoTags { get; }
         Task SaveChangesAsync();
-        void Add<T>(T entity) where T : BaseEntity;
     }
 }
