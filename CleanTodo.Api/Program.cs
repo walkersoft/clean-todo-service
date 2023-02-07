@@ -1,3 +1,4 @@
+using CleanTodo.Core.Configuration;
 using CleanTodo.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TodoDatabase"));
 });
+
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

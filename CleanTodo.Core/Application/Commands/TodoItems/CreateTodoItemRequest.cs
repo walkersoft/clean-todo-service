@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CleanTodo.Core.Application.Interfaces.Mapping;
+using CleanTodo.Core.Entities;
 
 namespace CleanTodo.Core.Application.Commands.TodoItems
 {
-    public class CreateTodoItemRequest
+    public class CreateTodoItemRequest : IMapTo<TodoItem>
     {
         public string Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }
