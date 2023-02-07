@@ -10,8 +10,4 @@
     <PackageReference Include="mediatr" Version="11.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\Interfaces\" />
-  </ItemGroup>
-
 </Project>
