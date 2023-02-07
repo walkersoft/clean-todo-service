@@ -12,7 +12,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
     {
         public Task<TodoItemResponse> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(new TodoItemResponse { Id = Guid.NewGuid() });
         }
     }
 }
