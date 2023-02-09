@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CleanTodo.Infrastructure.Data;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,14 @@ namespace CleanTodo.IntegrationTests
             _factory = new TestWebApplicationFactory();            
             _serviceScope = _factory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();            
             _mediator = _serviceScope.ServiceProvider.GetRequiredService<IMediator>();
+            InitalizeDatabase();
+        }
+
+        private void InitalizeDatabase()
+        {
+            var db = _serviceScope.ServiceProvider.GetRequiredService<TodoDbContext>();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
         }
     }
 }
