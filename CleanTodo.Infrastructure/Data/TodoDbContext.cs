@@ -1,4 +1,5 @@
-﻿using CleanTodo.Core.Entities;
+﻿using CleanTodo.Core.Application.Interfaces;
+using CleanTodo.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Infrastructure.Data
 {
-    public class TodoDbContext : DbContext
+    public class TodoDbContext : DbContext, ITodoApplicationDbContext
     {
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
@@ -22,6 +23,11 @@ namespace CleanTodo.Infrastructure.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             base.OnConfiguring(options);
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync();
         }
     }
 }

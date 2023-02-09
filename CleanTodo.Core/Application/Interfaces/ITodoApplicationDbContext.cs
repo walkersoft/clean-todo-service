@@ -13,6 +13,6 @@ namespace CleanTodo.Core.Application.Interfaces
         DbSet<TodoItem> TodoItems { get; }
         DbSet<TodoList> TodoLists { get; }
         DbSet<TodoTag> TodoTags { get; }
-        Task SaveChangesAsync();
+        Task<int> SaveChangesAsync();
     }
 }
