@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Application.Commands.TodoItems
 {
-    public class TodoItemResponse : DtoBase
+    public class TodoItemResponse : BaseDto
     {
         public string Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }

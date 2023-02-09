@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Application.Common
 {
-    abstract public class DtoBase
+    abstract public class BaseDto
     {
         public Guid Id { get; set; }
     }
