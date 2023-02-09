@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanTodo.Core.Application.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Application.Commands.TodoItems
 {
-    public class TodoItemResponse
+    public class TodoItemResponse : DtoBase
     {
-        public Guid Id { get; set; }
         public string Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }
         public bool IsComplete { get; set; }
