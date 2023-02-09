@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CleanTodo.Api.Tests;
 using CleanTodo.Core.Application.Commands.TodoItems;
 using CleanTodo.Infrastructure.Data;
 using FluentAssertions;
@@ -9,7 +8,7 @@ using System.Threading;
 using Xunit;
 
 namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
-{    
+{
     public sealed class CreateTodoItemShould
     {
         private readonly TestWebApplicationFactory _factory;

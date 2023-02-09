@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
-namespace CleanTodo.Api.Tests
+namespace CleanTodo.IntegrationTests
 {
     public class TestWebApplicationFactory : WebApplicationFactory<Program>
     {
@@ -21,7 +21,7 @@ namespace CleanTodo.Api.Tests
                     options.UseSqlServer(connectionString);
                 });
             });
-            
+
             base.ConfigureWebHost(builder);
         }
     }
