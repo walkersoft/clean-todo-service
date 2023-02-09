@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using CleanTodo.Core.Application.Commands.TodoItems;
-using CleanTodo.Infrastructure.Data;
+﻿using CleanTodo.Core.Application.Commands.TodoItems;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
