@@ -18,12 +18,12 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             _mapper = mapper;
         }
 
-        public Task<TodoItemResponse> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+        public async Task<TodoItemResponse> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             var todoItem = _mapper.Map<TodoItem>(request.Data);
             _dbContext.TodoItems.Add(todoItem);
-            _dbContext.SaveChangesAsync();
-            return Task.FromResult(_mapper.Map<TodoItemResponse>(todoItem));
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<TodoItemResponse>(todoItem);
         }
     }
 }

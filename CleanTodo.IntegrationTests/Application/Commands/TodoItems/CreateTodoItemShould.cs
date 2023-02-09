@@ -23,6 +23,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             var response = await _mediator.Send(new CreateTodoItemCommand(request));
 
             response.Id.Should().NotBe(default(Guid));
+            response.Description.Should().Be(request.Description);
         }
     }
 }
