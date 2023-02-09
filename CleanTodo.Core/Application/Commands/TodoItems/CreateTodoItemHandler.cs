@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanTodo.Core.Application.Interfaces;
+using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Entities;
 using MediatR;
 

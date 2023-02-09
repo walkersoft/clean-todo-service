@@ -1,4 +1,4 @@
-using CleanTodo.Core.Application.Interfaces;
+using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Configuration;
 using CleanTodo.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanTodo.Core.Application.Interfaces
+namespace CleanTodo.Core.Application.Interfaces.Persitence
 {
     public interface ITodoApplicationDbContext
     {
