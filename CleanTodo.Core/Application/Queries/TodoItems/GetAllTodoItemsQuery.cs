@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CleanTodo.Core.Application.Interfaces.Persitence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +24,13 @@ namespace CleanTodo.Core.Application.Queries.TodoItems
             _mapper = mapper;
         }
 
-        public Task<IEnumerable<TodoItemResponse>> Handle(GetAllTodoItemsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<TodoItemResponse>> Handle(GetAllTodoItemsQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var items = await _dbContext.TodoItems
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            return items.Select(x => _mapper.Map<TodoItemResponse>(x));
         }
     }
 }

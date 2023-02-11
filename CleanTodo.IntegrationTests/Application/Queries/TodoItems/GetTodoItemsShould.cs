@@ -1,5 +1,6 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoItems;
 using CleanTodo.Core.Application.Queries.TodoItems;
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
 
             await _mediator.Send(new CreateTodoItemCommand(createRequest));
             var response = await _mediator.Send(new GetAllTodoItemsQuery());
+
+            response.Any().Should().BeTrue();
         }
     }
 }
