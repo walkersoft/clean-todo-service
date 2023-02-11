@@ -16,7 +16,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
         }
 
         [Fact]
-        public async Task FetchTodoItems()
+        public async Task FetchTodoItems_WillSucceed()
         {
             var createRequest = new CreateTodoItemRequest()
             {
