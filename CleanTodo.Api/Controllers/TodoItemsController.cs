@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoItems;
+using CleanTodo.Core.Application.Queries.TodoItems;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,13 @@ namespace CleanTodo.Api.Controllers
         public TodoItemsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [ProducesResponseType(typeof(IEnumerable<TodoItemResponse>), StatusCodes.Status200OK)]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _mediator.Send(new GetAllTodoItemsQuery()));
         }
 
         [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]

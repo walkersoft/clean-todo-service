@@ -1,5 +1,5 @@
-﻿using CleanTodo.Core.Application.Commands.TodoItems;
-using CleanTodo.Core.Application.Interfaces.Mapping;
+﻿using CleanTodo.Core.Application.Interfaces.Mapping;
+using CleanTodo.Core.Application.Queries.TodoItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
