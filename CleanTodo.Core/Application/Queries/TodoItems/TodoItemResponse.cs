@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanTodo.Core.Application.Commands.TodoItems
+namespace CleanTodo.Core.Application.Queries.TodoItems
 {
     public class TodoItemResponse : BaseDto
     {
