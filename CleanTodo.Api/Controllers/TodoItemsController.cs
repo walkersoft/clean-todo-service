@@ -17,6 +17,13 @@ namespace CleanTodo.Api.Controllers
             _mediator = mediator;
         }
 
+        [ProducesResponseType(typeof(IEnumerable<TodoItemResponse>), StatusCodes.Status200OK)]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _mediator.Send(new GetAllTodoItemsQuery()));
+        }
+
         [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateTodoItemRequest request)
