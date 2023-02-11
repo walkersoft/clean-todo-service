@@ -1,3 +1,5 @@
+using CleanTodo.Core.Application.Interfaces.Persitence;
+using CleanTodo.Core.Configuration;
 using CleanTodo.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,9 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TodoDatabase"));
 });
+
+builder.Services.AddApplicationServices();
+builder.Services.AddScoped<ITodoApplicationDbContext>(provider => provider.GetRequiredService<TodoDbContext>());
 
 var app = builder.Build();
 
@@ -30,3 +35,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
