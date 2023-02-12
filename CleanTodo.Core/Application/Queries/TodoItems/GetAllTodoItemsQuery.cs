@@ -28,9 +28,10 @@ namespace CleanTodo.Core.Application.Queries.TodoItems
         {
             var items = await _dbContext.TodoItems
                 .AsNoTracking()
+                .ProjectTo<ProjectedTodoItemResponse>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return items.Select(x => _mapper.Map<TodoItemResponse>(x));
+            return items;
         }
     }
 }
