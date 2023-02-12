@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Entities
 {
-    public class TodoItem : BaseEntity, IMapTo<TodoItemResponse>
+    public class TodoItem : BaseEntity, IMapTo<TodoItemResponse>, IProjectTo<TodoItem, ProjectedTodoItemResponse>
     {
         public string Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }

@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Application.Common;
+using CleanTodo.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace CleanTodo.Core.Application.Queries.TodoItems
         public int RollOverCount { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? CompletionDate { get; set; }
-        public ICollection<Guid> Tags { get; set; } = new List<Guid>();
+        public ICollection<TodoTag> Tags { get; set; } = new List<TodoTag>();
     }
+
+    public class ProjectedTodoItemResponse : TodoItemResponse { }
 }
