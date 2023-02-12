@@ -24,6 +24,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             var todoItem = _mapper.Map<TodoItem>(request.Data);
             _dbContext.TodoItems.Add(todoItem);
             await _dbContext.SaveChangesAsync();
+
             return _mapper.Map<TodoItemResponse>(todoItem);
         }
     }
