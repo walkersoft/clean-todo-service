@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoTags;
+using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
 using FluentAssertions;
 using System;
@@ -25,6 +26,23 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             response.Id.Should().NotBe(default(Guid));
             response.Name.Should().Be(createRequest.Name);
+        }
+
+        [Fact]
+        public async Task GivenDuplicateName_WhenHandled_WillReturnExistingTag()
+        {
+            var firstTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
+            var secondTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
+
+            var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
+            var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
+            var allTagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
+
+            allTagsResponse.Should().NotBeEmpty();
+            allTagsResponse.Should().HaveCount(1);
+            allTagsResponse.First().Id
+                .Should().Be(firstTagResponse.Id)
+                .And.Be(secondTagResponse.Id);
         }
     }
 }
