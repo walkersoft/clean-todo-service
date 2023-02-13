@@ -1,10 +1,7 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
