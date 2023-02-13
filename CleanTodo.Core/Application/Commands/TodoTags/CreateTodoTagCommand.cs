@@ -1,4 +1,6 @@
-﻿using CleanTodo.Core.Application.Queries.TodoTags;
+﻿using AutoMapper;
+using CleanTodo.Core.Application.Interfaces.Persitence;
+using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
 using MediatR;
 using System;
@@ -13,9 +15,22 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
     public class CreateTodoTagCommandHandler : IRequestHandler<CreateTodoTagCommand, TodoTagResponse>
     {
-        public Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
+        private readonly ITodoApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public CreateTodoTagCommandHandler(ITodoApplicationDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
+        {
+            var tag = _mapper.Map<TodoTag>(request.Data);
+            _context.TodoTags.Add(tag);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<TodoTagResponse>(tag);
         }
     }
 }

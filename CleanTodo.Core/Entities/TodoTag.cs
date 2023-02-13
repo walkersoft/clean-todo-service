@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CleanTodo.Core.Application.Interfaces.Mapping;
+using CleanTodo.Core.Application.Queries.TodoTags;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Entities
 {
-    public class TodoTag : BaseEntity
+    public class TodoTag : BaseEntity, IMapTo<TodoTagResponse>
     {
         public string Name { get; set; } = string.Empty;
         public ICollection<TodoItem> TodoItems { get; private set; }
