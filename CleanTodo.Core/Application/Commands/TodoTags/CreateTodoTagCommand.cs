@@ -26,9 +26,18 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
         public async Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
         {
-            var tag = _mapper.Map<TodoTag>(request.Data);
-            _context.TodoTags.Add(tag);
-            await _context.SaveChangesAsync();
+            // See if this tag already exists
+            var tag = _context.TodoTags
+                .Where(tag => request.Data.Name.ToLower() == tag.Name.ToLower())
+                .FirstOrDefault();
+
+            // If the tag does not exist, create it
+            if (tag == null)
+            {
+                tag = _mapper.Map<TodoTag>(request.Data);
+                _context.TodoTags.Add(tag);
+                await _context.SaveChangesAsync();
+            }            
 
             return _mapper.Map<TodoTagResponse>(tag);
         }
