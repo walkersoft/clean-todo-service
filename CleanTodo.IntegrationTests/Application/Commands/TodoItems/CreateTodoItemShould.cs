@@ -10,9 +10,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
 {
     public sealed class CreateTodoItemShould : TestingBase
     {
-        public CreateTodoItemShould() : base()
-        {
-        }
+        public CreateTodoItemShould() : base() { }
 
         [Fact]
         public async Task GivenValidTodoItemRequest_WhenHandled_WillSucceed()

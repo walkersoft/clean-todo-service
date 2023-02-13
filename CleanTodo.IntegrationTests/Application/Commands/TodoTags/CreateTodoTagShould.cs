@@ -13,9 +13,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 {
     public sealed class CreateTodoTagShould : TestingBase
     {
-        public CreateTodoTagShould() : base()
-        {
-        }
+        public CreateTodoTagShould() : base() { }
 
         [Fact]
         public async Task GivenValidTodoTagRequest_WhenHandled_WillSucceed()

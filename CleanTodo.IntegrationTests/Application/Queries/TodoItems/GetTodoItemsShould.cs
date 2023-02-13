@@ -12,9 +12,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
 {
     public class GetTodoItemsShould : TestingBase
     {
-        public GetTodoItemsShould() : base()
-        {            
-        }
+        public GetTodoItemsShould() : base() { }
 
         [Fact]
         public async Task FetchTodoItems_WillSucceed()
