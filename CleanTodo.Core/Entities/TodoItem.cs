@@ -1,4 +1,5 @@
-﻿using CleanTodo.Core.Application.Interfaces.Mapping;
+﻿using AutoMapper;
+using CleanTodo.Core.Application.Interfaces.Mapping;
 using CleanTodo.Core.Application.Queries.TodoItems;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,24 @@ namespace CleanTodo.Core.Entities
         public TodoItem()
         {
             Tags = new List<TodoTag>();
+        }
+
+        public void ConfigureMapping(IProfileExpression profile)
+        {
+            profile.CreateMap<TodoItem, TodoItemResponse>()
+                .ForMember(
+                    destination => destination.Tags,
+                    source => source.MapFrom(todoItem => todoItem.Tags.Select(tag => tag.Id))
+                );
+        }
+
+        public void ConfigureProjection(IProfileExpression profile)
+        {
+            profile.CreateProjection<TodoItem, ProjectedTodoItemResponse>()
+                .ForMember(
+                    destination => destination.Tags, 
+                    source => source.MapFrom(todoItem => todoItem.Tags.Select(tag => tag.Id))
+                );
         }
     }
 }
