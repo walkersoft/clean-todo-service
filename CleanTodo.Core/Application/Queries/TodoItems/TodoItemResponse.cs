@@ -17,7 +17,7 @@ namespace CleanTodo.Core.Application.Queries.TodoItems
         public int RollOverCount { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? CompletionDate { get; set; }
-        public ICollection<TodoTag> Tags { get; set; } = new List<TodoTag>();
+        public ICollection<Guid> Tags { get; set; } = new List<Guid>();
     }
 
     public class ProjectedTodoItemResponse : TodoItemResponse { }
