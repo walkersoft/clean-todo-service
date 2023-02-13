@@ -8,22 +8,22 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
 {
     public record CreateTodoItemCommand(CreateTodoItemRequest Data) : IRequest<TodoItemResponse>;
 
-    public class CreateTodoItemHandler : IRequestHandler<CreateTodoItemCommand, TodoItemResponse>
+    public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, TodoItemResponse>
     {
-        private readonly ITodoApplicationDbContext _dbContext;
+        private readonly ITodoApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public CreateTodoItemHandler(ITodoApplicationDbContext dbContext, IMapper mapper)
+        public CreateTodoItemCommandHandler(ITodoApplicationDbContext dbContext, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _context = dbContext;
             _mapper = mapper;
         }
 
         public async Task<TodoItemResponse> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             var todoItem = _mapper.Map<TodoItem>(request.Data);
-            _dbContext.TodoItems.Add(todoItem);
-            await _dbContext.SaveChangesAsync();
+            _context.TodoItems.Add(todoItem);
+            await _context.SaveChangesAsync();
 
             return _mapper.Map<TodoItemResponse>(todoItem);
         }
