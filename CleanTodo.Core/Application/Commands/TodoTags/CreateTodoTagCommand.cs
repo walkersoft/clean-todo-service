@@ -26,7 +26,7 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
         public async Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
         {
-            // See if this tag already exists
+            // See if this tag already exists, ignoring case-sensitivity
             var tag = _context.TodoTags
                 .Where(tag => request.Data.Name.ToLower() == tag.Name.ToLower())
                 .FirstOrDefault();
