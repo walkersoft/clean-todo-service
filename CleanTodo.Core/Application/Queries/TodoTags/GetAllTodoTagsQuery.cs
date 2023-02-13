@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanTodo.Core.Application.Queries.TodoTags
 {
-    public record GetAllTodoTagsQuery() : IRequest<IEnumerable<TodoTagResponse>>;
+    public record GetAllTodoTagsQuery : IRequest<IEnumerable<TodoTagResponse>>;
 
     public class GetAllTodoTagsQueryHandler : IRequestHandler<GetAllTodoTagsQuery, IEnumerable<TodoTagResponse>>
     {
