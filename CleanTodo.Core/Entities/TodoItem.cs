@@ -29,8 +29,8 @@ namespace CleanTodo.Core.Entities
         {
             profile.CreateMap<TodoItem, TodoItemResponse>()
                 .ForMember(
-                    source => source.Tags,
-                    dest => dest.MapFrom(x => x.Tags.Select(t => t.Id))
+                    destination => destination.Tags,
+                    source => source.MapFrom(todoItem => todoItem.Tags.Select(tag => tag.Id))
                 );
         }
 
@@ -38,8 +38,8 @@ namespace CleanTodo.Core.Entities
         {
             profile.CreateProjection<TodoItem, ProjectedTodoItemResponse>()
                 .ForMember(
-                    source => source.Tags, 
-                    dest => dest.MapFrom(x => x.Tags.Select(t => t.Id))
+                    destination => destination.Tags, 
+                    source => source.MapFrom(todoItem => todoItem.Tags.Select(tag => tag.Id))
                 );
         }
     }
