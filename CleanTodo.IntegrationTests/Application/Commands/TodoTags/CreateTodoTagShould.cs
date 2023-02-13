@@ -19,12 +19,12 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         [Fact]
         public async Task GivenValidTodoTagRequest_WhenHandled_WillSucceed()
         {
-            var request = new CreateTodoTagRequest() { Name = "Foo" };
+            var createRequest = new CreateTodoTagRequest() { Name = "Foo" };
 
-            var response = await _mediator.Send(new CreateTodoTagCommand(request));
+            var response = await _mediator.Send(new CreateTodoTagCommand(createRequest));
 
             response.Id.Should().NotBe(default(Guid));
-            response.Name.Should().Be(request.Name);
+            response.Name.Should().Be(createRequest.Name);
         }
     }
 }
