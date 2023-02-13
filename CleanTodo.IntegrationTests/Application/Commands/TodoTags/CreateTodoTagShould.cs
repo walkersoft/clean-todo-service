@@ -29,10 +29,10 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         }
 
         [Fact]
-        public async Task GivenDuplicateName_WhenHandled_WillReturnExistingTag()
+        public async Task GivenDuplicateNameWithDifferentCase_WhenHandled_WillReturnExistingTag()
         {
             var firstTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
-            var secondTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
+            var secondTagRequest = new CreateTodoTagRequest() { Name = "foo" };
 
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
