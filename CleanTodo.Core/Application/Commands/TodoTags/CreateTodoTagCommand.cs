@@ -28,13 +28,14 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
         {
             // See if this tag already exists, ignoring case-sensitivity
             var tag = _context.TodoTags
-                .Where(tag => request.Data.Name.ToLower() == tag.Name.ToLower())
+                .Where(tag => request.Data.Name.ToLower().Trim() == tag.Name.ToLower().Trim())
                 .FirstOrDefault();
 
             // If the tag does not exist, create it
             if (tag == null)
             {
                 tag = _mapper.Map<TodoTag>(request.Data);
+                tag.Name = tag.Name.Trim();
                 _context.TodoTags.Add(tag);
                 await _context.SaveChangesAsync();
             }            
