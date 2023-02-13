@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
+namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
 {
     public sealed class GetTodoTagsShould : TestingBase
     {
