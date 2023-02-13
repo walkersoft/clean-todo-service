@@ -22,6 +22,11 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
         public async Task<TodoItemResponse> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             var todoItem = _mapper.Map<TodoItem>(request.Data);
+            _context.TodoTags
+                .Where(tag => request.Data.TagIds.Contains(tag.Id))
+                .ToList()
+                .ForEach(tag => todoItem.Tags.Add(tag));
+
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 

@@ -9,6 +9,6 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
         public bool IsActive { get; set; }
         public bool RollsOver { get; set; }
         public DateTime DateDate { get; set; }
-        public ICollection<Guid> Tags { get; set; } = new List<Guid>();
+        public ICollection<Guid> TagIds { get; set; } = new List<Guid>();
     }
 }
