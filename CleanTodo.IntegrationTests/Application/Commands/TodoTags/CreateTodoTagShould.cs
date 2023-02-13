@@ -44,5 +44,22 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
                 .Should().Be(firstTagResponse.Id)
                 .And.Be(secondTagResponse.Id);
         }
+
+        [Fact]
+        public async Task GivenDuplicateNameWithLeadingOrTrailingWhitespace_WhenHandled_WillReturnExistingTag()
+        {
+            var firstTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
+            var secondTagRequest = new CreateTodoTagRequest() { Name = " Foo " };
+
+            var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
+            var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
+            var allTagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
+
+            allTagsResponse.Should().NotBeEmpty();
+            allTagsResponse.Should().HaveCount(1);
+            allTagsResponse.First().Id
+                .Should().Be(firstTagResponse.Id)
+                .And.Be(secondTagResponse.Id);
+        }
     }
 }
