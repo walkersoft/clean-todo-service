@@ -20,7 +20,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddScoped<ITodoApplicationDbContext>(provider => provider.GetRequiredService<TodoDbContext>());
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyMethod());
+    options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
 
 var app = builder.Build();
