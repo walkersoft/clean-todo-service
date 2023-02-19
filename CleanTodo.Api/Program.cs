@@ -18,6 +18,10 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<ITodoApplicationDbContext>(provider => provider.GetRequiredService<TodoDbContext>());
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
 
 var app = builder.Build();
 
@@ -31,6 +35,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 
