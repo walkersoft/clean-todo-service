@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoTags;
+using CleanTodo.Core.Exceptions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,15 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             updateResponse.Id.Should().Be(createResponse.Id);
             updateResponse.Name.Should().Be(updateRequest.Name);
+        }
+
+        [Fact]
+        public async Task GivenTagIdThatDoesNotExist_WhenHandled_WillThrowEntityNotFoundException()
+        {
+            var request = new TodoTagRequest() { Id = Guid.NewGuid(), Name = "Foo" };
+            var action = async () => await _mediator.Send(new UpdateTodoTagCommand(request));
+
+            await action.Should().ThrowAsync<EntityNotFoundException>();
         }
     }
 }
