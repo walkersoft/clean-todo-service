@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoTags;
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,17 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
     {
         public UpdateTodoTagShould() { }
 
-        //[Fact]
+        [Fact]
         public async Task GivenAnExistingTagWithNew_WhenHandled_WillSucceed()
         {
             var createRequest = new TodoTagRequest() { Name = "Foo" };
             var createResponse = await _mediator.Send(new CreateTodoTagCommand(createRequest));
 
             var updateRequest = new TodoTagRequest() { Id = createResponse.Id, Name = "Bar" };
-            
+            var updateResponse = await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
+
+            updateResponse.Id.Should().Be(createResponse.Id);
+            updateResponse.Name.Should().Be(updateRequest.Name);
         }
     }
 }
