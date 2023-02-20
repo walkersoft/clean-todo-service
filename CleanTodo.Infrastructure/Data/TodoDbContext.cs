@@ -1,6 +1,9 @@
 ﻿using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Entities;
+using CleanTodo.Core.Exceptions;
+using CleanTodo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -28,6 +31,11 @@ namespace CleanTodo.Infrastructure.Data
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();
+        }
+
+        public Task<TEntity> FirstOrNotFound<TEntity>(TEntity entity) where TEntity : BaseEntity
+        {
+            return Set<TEntity>().FirstOrNotFound(entity.Id);
         }
     }
 }

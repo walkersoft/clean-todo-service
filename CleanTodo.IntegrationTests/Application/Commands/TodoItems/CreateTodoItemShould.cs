@@ -29,8 +29,8 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
         [Fact]
         public async Task GivenTodoItemWithTagIds_WhenHandled_WillPopulateTheTags()
         {
-            var firstTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
-            var secondTagRequest = new CreateTodoTagRequest() { Name = "Bar" };
+            var firstTagRequest = new TodoTagRequest() { Name = "Foo" };
+            var secondTagRequest = new TodoTagRequest() { Name = "Bar" };
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
 

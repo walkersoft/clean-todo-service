@@ -1,13 +1,20 @@
+using CleanTodo.Api.Middleware.Exceptions;
 using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Configuration;
 using CleanTodo.Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(config =>
+{
+    // Informs that every endpoint is a potential HTTP 500 waiting to happen
+    config.Filters.Add(new ProducesResponseTypeAttribute(typeof(ExceptionResponse), 500));
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,6 +25,7 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<ITodoApplicationDbContext>(provider => provider.GetRequiredService<TodoDbContext>());
+builder.Services.AddScoped<ExceptionMiddleware>();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -37,6 +45,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
