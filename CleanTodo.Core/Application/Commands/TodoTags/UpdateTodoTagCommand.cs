@@ -2,6 +2,7 @@
 using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoItems;
 using CleanTodo.Core.Application.Queries.TodoTags;
+using CleanTodo.Core.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
         public async Task<TodoTagResponse> Handle(UpdateTodoTagCommand request, CancellationToken cancellationToken)
         {
-            var tag = await _context.TodoTags.FindAsync(request.Data.Id);
+            var tag = await _context.FirstOrNotFound(_mapper.Map<TodoTag>(request.Data));
             tag.Name = request.Data.Name;
             _context.TodoTags.Update(tag);
             await _context.SaveChangesAsync();
