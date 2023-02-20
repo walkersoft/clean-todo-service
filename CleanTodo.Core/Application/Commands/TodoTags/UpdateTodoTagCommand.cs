@@ -24,9 +24,14 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
             _mapper = mapper;
         }
 
-        public Task<TodoTagResponse> Handle(UpdateTodoTagCommand request, CancellationToken cancellationToken)
+        public async Task<TodoTagResponse> Handle(UpdateTodoTagCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tag = await _context.TodoTags.FindAsync(request.Data.Id);
+            tag.Name = request.Data.Name;
+            _context.TodoTags.Update(tag);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<TodoTagResponse>(tag);
         }
     }
 }
