@@ -1,4 +1,5 @@
-﻿using CleanTodo.Core.Application.Commands.TodoTags;
+﻿using CleanTodo.Api.Middleware.Exceptions;
+using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Application.Queries.TodoItems;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using MediatR;
@@ -32,7 +33,7 @@ namespace CleanTodo.Api.Controllers
         }
 
         [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
         [HttpPut]
         public async Task<IActionResult> Update(TodoTagRequest request)
         {
