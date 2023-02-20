@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Application.Commands.TodoTags
 {
-    public record CreateTodoTagCommand(CreateTodoTagRequest Data) : IRequest<TodoTagResponse>;
+    public record CreateTodoTagCommand(TodoTagRequest Data) : IRequest<TodoTagResponse>;
 
     public class CreateTodoTagCommandHandler : IRequestHandler<CreateTodoTagCommand, TodoTagResponse>
     {

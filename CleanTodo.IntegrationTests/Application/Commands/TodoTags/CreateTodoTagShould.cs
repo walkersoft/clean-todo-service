@@ -18,7 +18,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         [Fact]
         public async Task GivenValidTodoTagRequest_WhenHandled_WillSucceed()
         {
-            var createRequest = new CreateTodoTagRequest() { Name = "Foo" };
+            var createRequest = new TodoTagRequest() { Name = "Foo" };
 
             var response = await _mediator.Send(new CreateTodoTagCommand(createRequest));
 
@@ -29,8 +29,8 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         [Fact]
         public async Task GivenDuplicateNameWithDifferentCase_WhenHandled_WillReturnExistingTag()
         {
-            var firstTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
-            var secondTagRequest = new CreateTodoTagRequest() { Name = "foo" };
+            var firstTagRequest = new TodoTagRequest() { Name = "Foo" };
+            var secondTagRequest = new TodoTagRequest() { Name = "foo" };
 
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
@@ -46,8 +46,8 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         [Fact]
         public async Task GivenDuplicateNameWithLeadingOrTrailingWhitespace_WhenHandled_WillReturnExistingTag()
         {
-            var firstTagRequest = new CreateTodoTagRequest() { Name = "Foo" };
-            var secondTagRequest = new CreateTodoTagRequest() { Name = " Foo " };
+            var firstTagRequest = new TodoTagRequest() { Name = "Foo" };
+            var secondTagRequest = new TodoTagRequest() { Name = " Foo " };
 
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));

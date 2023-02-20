@@ -14,7 +14,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
         [Fact]
         public async Task FetchTodoTags_WillSucceed()
         {
-            var request = new CreateTodoTagRequest() { Name = "Foo" };
+            var request = new TodoTagRequest() { Name = "Foo" };
 
             await _mediator.Send(new CreateTodoTagCommand(request));
             var response = await _mediator.Send(new GetAllTodoTagsQuery());
