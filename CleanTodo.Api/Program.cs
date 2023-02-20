@@ -1,3 +1,4 @@
+using CleanTodo.Api.Middleware.Exceptions;
 using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Configuration;
 using CleanTodo.Infrastructure.Data;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<ITodoApplicationDbContext>(provider => provider.GetRequiredService<TodoDbContext>());
+builder.Services.AddScoped<ExceptionMiddleware>();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -37,6 +39,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
