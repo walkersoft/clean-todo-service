@@ -39,5 +39,14 @@ namespace CleanTodo.Api.Controllers
         {
             return Ok(await _mediator.Send(new UpdateTodoTagCommand(request)));
         }
+
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _mediator.Send(new DeleteTodoTagCommand(id));
+            return NoContent();
+        }
     }
 }
