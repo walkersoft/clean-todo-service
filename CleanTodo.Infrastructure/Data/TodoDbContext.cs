@@ -37,5 +37,10 @@ namespace CleanTodo.Infrastructure.Data
         {
             return Set<TEntity>().FirstOrNotFound(entity.Id);
         }
+
+        public Task<TEntity> FirstOrNotFound<TEntity>(Guid id) where TEntity : BaseEntity
+        {
+            return Set<TEntity>().FirstOrNotFound(id);
+        }
     }
 }

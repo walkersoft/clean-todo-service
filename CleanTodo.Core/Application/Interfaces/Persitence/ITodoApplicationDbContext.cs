@@ -16,5 +16,6 @@ namespace CleanTodo.Core.Application.Interfaces.Persitence
         DbSet<TodoTag> TodoTags { get; }
         Task<int> SaveChangesAsync();
         Task<TEntity> FirstOrNotFound<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        Task<TEntity> FirstOrNotFound<TEntity>(Guid id) where TEntity : BaseEntity;
     }
 }
