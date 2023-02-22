@@ -27,7 +27,7 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
         public async Task<TodoTagResponse> Handle(UpdateTodoTagCommand request, CancellationToken cancellationToken)
         {
-            var tag = await _context.FirstOrNotFound(_mapper.Map<TodoTag>(request.Data));
+            var tag = await _context.FirstOrNotFound<TodoTag>(request.Data.Id);
             tag.Name = request.Data.Name;
             _context.TodoTags.Update(tag);
             await _context.SaveChangesAsync();

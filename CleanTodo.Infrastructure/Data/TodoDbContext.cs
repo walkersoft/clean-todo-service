@@ -33,11 +33,6 @@ namespace CleanTodo.Infrastructure.Data
             return await base.SaveChangesAsync();
         }
 
-        public Task<TEntity> FirstOrNotFound<TEntity>(TEntity entity) where TEntity : BaseEntity
-        {
-            return Set<TEntity>().FirstOrNotFound(entity.Id);
-        }
-
         public Task<TEntity> FirstOrNotFound<TEntity>(Guid id) where TEntity : BaseEntity
         {
             return Set<TEntity>().FirstOrNotFound(id);
