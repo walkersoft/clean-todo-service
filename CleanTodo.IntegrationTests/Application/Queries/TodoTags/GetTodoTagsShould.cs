@@ -5,6 +5,7 @@ using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Sdk;
 
 namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
 {
@@ -37,6 +38,18 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
             var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
 
             tagsResponse.All(x => x.IsAssigned).Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task FetchTodoTagsNotBelongingToItems_WhenHandled_WillShowTagsAreUnassigned()
+        {
+            await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Foo" }));
+            await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Bar" }));
+            await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Baz" }));
+
+            var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
+
+            tagsResponse.All(x => x.IsAssigned).Should().BeFalse();
         }
     }
 }
