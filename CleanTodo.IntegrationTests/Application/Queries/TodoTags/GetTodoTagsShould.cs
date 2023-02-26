@@ -48,6 +48,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
 
             var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
 
+            tagsResponse.Any().Should().BeTrue();
             tagsResponse.All(x => x.IsAssigned).Should().BeFalse();
         }
     }
