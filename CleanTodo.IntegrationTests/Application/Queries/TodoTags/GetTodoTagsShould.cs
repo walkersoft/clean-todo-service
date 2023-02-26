@@ -1,4 +1,5 @@
-﻿using CleanTodo.Core.Application.Commands.TodoTags;
+﻿using CleanTodo.Core.Application.Commands.TodoItems;
+using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using FluentAssertions;
 using System.Linq;
@@ -20,6 +21,35 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
             var response = await _mediator.Send(new GetAllTodoTagsQuery());
 
             response.Any().Should().BeTrue();
+        }
+
+        [Fact] 
+        public async Task FetchTodoTagsBelongingToItems_WhenHandled_WillShowTagsAreAssigned()
+        {
+            var tagResponse = await _mediator.Send(
+                new CreateTodoTagCommand(new TodoTagRequest() { Name = "Foo" })
+            );
+
+            var itemRequest = new CreateTodoItemRequest() { Description = "Bar" };
+            itemRequest.TagIds.Add(tagResponse.Id);
+            await _mediator.Send(new CreateTodoItemCommand(itemRequest));
+
+            var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
+
+            tagsResponse.All(x => x.IsAssigned).Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task FetchTodoTagsNotBelongingToItems_WhenHandled_WillShowTagsAreUnassigned()
+        {
+            await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Foo" }));
+            await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Bar" }));
+            await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Baz" }));
+
+            var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
+
+            tagsResponse.Any().Should().BeTrue();
+            tagsResponse.All(x => x.IsAssigned).Should().BeFalse();
         }
     }
 }

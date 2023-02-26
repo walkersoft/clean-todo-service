@@ -10,5 +10,6 @@ namespace CleanTodo.Core.Application.Queries.TodoTags
     public class TodoTagResponse : BaseDto
     {
         public string Name { get; set; } = string.Empty;
+        public bool IsAssigned { get; set; }
     }
 }
