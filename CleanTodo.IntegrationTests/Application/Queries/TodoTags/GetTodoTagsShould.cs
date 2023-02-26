@@ -5,7 +5,6 @@ using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
 {
