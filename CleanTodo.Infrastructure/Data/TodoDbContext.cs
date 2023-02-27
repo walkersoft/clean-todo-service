@@ -23,6 +23,12 @@ namespace CleanTodo.Infrastructure.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TodoTag>().Navigation(x => x.TodoItems).AutoInclude();
+            base.OnModelCreating(modelBuilder);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             base.OnConfiguring(options);

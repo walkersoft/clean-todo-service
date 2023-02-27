@@ -10,7 +10,7 @@ namespace CleanTodo.IntegrationTests
     {
         private readonly TestWebApplicationFactory _factory;
         private readonly IServiceScope _serviceScope;
-        private TodoDbContext _dbContext;
+        protected TodoDbContext _dbContext;
         protected readonly IMediator _mediator;
         
 

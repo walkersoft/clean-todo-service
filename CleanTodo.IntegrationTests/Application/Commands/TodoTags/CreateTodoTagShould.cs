@@ -34,6 +34,8 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
+
+            _dbContext.ChangeTracker.Clear();
             var allTagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
 
             allTagsResponse.Should().NotBeEmpty();
@@ -51,6 +53,8 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
+
+            _dbContext.ChangeTracker.Clear();
             var allTagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
 
             allTagsResponse.Should().NotBeEmpty();

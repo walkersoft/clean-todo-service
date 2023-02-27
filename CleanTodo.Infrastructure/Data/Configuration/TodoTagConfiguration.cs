@@ -14,7 +14,6 @@ namespace CleanTodo.Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<TodoTag> builder)
         {
             builder.Property(x => x.Name).HasMaxLength(32);
-            builder.Navigation(x => x.TodoItems).AutoInclude();
         }
     }
 }

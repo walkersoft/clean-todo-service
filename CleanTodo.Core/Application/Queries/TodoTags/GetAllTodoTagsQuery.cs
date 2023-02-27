@@ -21,6 +21,7 @@ namespace CleanTodo.Core.Application.Queries.TodoTags
         public async Task<IEnumerable<TodoTagResponse>> Handle(GetAllTodoTagsQuery request, CancellationToken cancellationToken)
         {
             var tags = await _context.TodoTags
+                .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
             return tags.Select(tag => {

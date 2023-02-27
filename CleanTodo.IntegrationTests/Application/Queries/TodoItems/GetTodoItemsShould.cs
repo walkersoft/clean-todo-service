@@ -23,6 +23,8 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
             };
 
             await _mediator.Send(new CreateTodoItemCommand(createRequest));
+
+            _dbContext.ChangeTracker.Clear();
             var response = await _mediator.Send(new GetAllTodoItemsQuery());
 
             response.Any().Should().BeTrue();
