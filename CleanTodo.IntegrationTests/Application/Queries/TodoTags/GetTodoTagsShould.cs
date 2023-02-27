@@ -18,6 +18,8 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
             var request = new TodoTagRequest() { Name = "Foo" };
 
             await _mediator.Send(new CreateTodoTagCommand(request));
+            
+            _dbContext.ChangeTracker.Clear();
             var response = await _mediator.Send(new GetAllTodoTagsQuery());
 
             response.Any().Should().BeTrue();
@@ -34,7 +36,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
             itemRequest.TagIds.Add(tagResponse.Id);
             await _mediator.Send(new CreateTodoItemCommand(itemRequest));
             
-            _dbContext.ChangeTracker.Clear(); // Clear before query
+            _dbContext.ChangeTracker.Clear();
             var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
 
             tagsResponse.All(x => x.IsAssigned == true).Should().BeTrue();
@@ -47,7 +49,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
             await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Bar" }));
             await _mediator.Send(new CreateTodoTagCommand(new TodoTagRequest() { Name = "Baz" }));
 
-            _dbContext.ChangeTracker.Clear(); // Clear before query
+            _dbContext.ChangeTracker.Clear();
             var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
 
             tagsResponse.Any().Should().BeTrue();
