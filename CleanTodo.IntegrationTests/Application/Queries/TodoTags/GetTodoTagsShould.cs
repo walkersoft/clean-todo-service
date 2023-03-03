@@ -55,5 +55,23 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
             tagsResponse.Any().Should().BeTrue();
             tagsResponse.All(x => x.IsAssigned == false).Should().BeTrue();
         }
+
+        [Fact]
+        public async Task FetchTodoTags_WhenHandled_WillShowAssignedTodoCounts()
+        {
+            var tagResponse = await _mediator.Send(
+                new CreateTodoTagCommand(new TodoTagRequest() { Name = "Foo" })
+            );
+
+            var itemRequest = new CreateTodoItemRequest() { Description = "Bar" };
+            itemRequest.TagIds.Add(tagResponse.Id);
+            await _mediator.Send(new CreateTodoItemCommand(itemRequest));
+
+            _dbContext.ChangeTracker.Clear();
+
+            var tagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
+
+            tagsResponse.First().AssignedCount.Should().Be(1);
+        }
     }
 }
