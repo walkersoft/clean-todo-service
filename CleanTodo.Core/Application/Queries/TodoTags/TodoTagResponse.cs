@@ -11,5 +11,6 @@ namespace CleanTodo.Core.Application.Queries.TodoTags
     {
         public string Name { get; set; } = string.Empty;
         public bool IsAssigned { get; set; }
+        public int AssignedCount { get; set; }
     }
 }
