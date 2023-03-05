@@ -25,14 +25,14 @@ namespace CleanTodo.Api.Controllers
             return Ok(await _mediator.Send(new GetAllTodoTagsQuery()));
         }
 
-        [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TodoTagResponse), StatusCodes.Status200OK)]
         [HttpPost]
         public async Task<IActionResult> Create(TodoTagRequest request)
         {
             return Ok(await _mediator.Send(new CreateTodoTagCommand(request)));
         }
 
-        [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TodoTagResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
         [HttpPut]
         public async Task<IActionResult> Update(TodoTagRequest request)
