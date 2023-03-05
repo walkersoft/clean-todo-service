@@ -42,7 +42,7 @@ namespace CleanTodo.Api.Controllers
 
         [ProducesResponseType(typeof(TodoTagResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
-        [HttpPut]
+        [HttpPut("Unassign")]
         public async Task<IActionResult> Unassign(TodoTagRequest request)
         {
             return Ok(await _mediator.Send(new UnassignTodoTagCommand(request)));
