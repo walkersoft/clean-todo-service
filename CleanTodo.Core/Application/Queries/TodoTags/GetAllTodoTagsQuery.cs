@@ -26,10 +26,8 @@ namespace CleanTodo.Core.Application.Queries.TodoTags
 
             return tags.Select(tag => {
                 var mappedTag = _mapper.Map<TodoTagResponse>(tag);
-                var count = tag.TodoItems.Count;
-                mappedTag.IsAssigned = count > 0;
-                mappedTag.AssignedCount = count;
-
+                mappedTag.SetAssignments(tag);
+;
                 return mappedTag;
             });
         }
