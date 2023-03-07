@@ -1,5 +1,6 @@
 ﻿using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Entities;
+using CleanTodo.Core.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,16 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
         public async Task<Unit> Handle(DeleteTodoTagCommand request, CancellationToken cancellationToken)
         {
             var tag = await _context.FirstOrNotFound<TodoTag>(request.Id);
+            
+            if (tag.TodoItems.Any())
+            {
+                throw new AssignedTagRemovalException(string.Format(
+                    "Unable to remove tag with Id: {0},  Name: {1}. It is assigned to dependent items. Unassign the tag before deleting it.",
+                    tag.Id,
+                    tag.Name
+                ));
+            }
+
             _context.TodoTags.Remove(tag);
             await _context.SaveChangesAsync();
 
