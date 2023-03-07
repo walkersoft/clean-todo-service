@@ -1,4 +1,5 @@
-﻿using CleanTodo.Core.Application.Commands.TodoTags;
+﻿using CleanTodo.Core.Application.Commands.TodoItems;
+using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Exceptions;
 using FluentAssertions;
 using System;
@@ -42,6 +43,21 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         {
             var deleteAction = async () => await _mediator.Send(new DeleteTodoTagCommand(Guid.NewGuid()));
             await deleteAction.Should().ThrowAsync<EntityNotFoundException>();
+        }
+
+        [Fact]
+        public async Task GivenTodoTagThatIsAssigned_WhenHandled_WillThrowException()
+        {
+            var createTagRequest = new TodoTagRequest() { Name = "Foo" };
+            var createTagResponse = await _mediator.Send(new CreateTodoTagCommand(createTagRequest));
+
+            var createItemRequest = new CreateTodoItemRequest() { Description = "Bar" };
+            createItemRequest.TagIds.Add(createTagResponse.Id);
+            await _mediator.Send(new CreateTodoItemCommand(createItemRequest));
+
+            var deleteAction = async () => await _mediator.Send(new DeleteTodoTagCommand(createTagResponse.Id));
+
+            await deleteAction.Should().ThrowAsync<AssignedTagRemovalException>();
         }
     }
 }
