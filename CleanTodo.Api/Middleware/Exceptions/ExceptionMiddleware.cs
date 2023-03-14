@@ -22,6 +22,7 @@ namespace CleanTodo.Api.Middleware.Exceptions
         {
             context.Response.StatusCode = ex switch
             {
+                AssignedTagRemovalException => StatusCodes.Status400BadRequest,
                 EntityNotFoundException => StatusCodes.Status404NotFound,
                 _ => StatusCodes.Status500InternalServerError
             };
