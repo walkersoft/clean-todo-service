@@ -49,6 +49,7 @@ namespace CleanTodo.Api.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
