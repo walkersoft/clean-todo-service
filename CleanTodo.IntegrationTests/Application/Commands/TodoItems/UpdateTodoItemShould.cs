@@ -14,7 +14,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
         public UpdateTodoItemShould() : base() { }
 
         [Fact]
-        public async Task GivenExistingTodoItemIsEdited_WhenHandled_ItemIsUpdated()
+        public async Task GivenExistingTodoItemWithDescriptionEdited_WhenHandled_ItemIsUpdated()
         {
             var createRequest = new TodoItemRequest() { Description = "Foo" };
             var createResponse = await _mediator.Send(new CreateTodoItemCommand(createRequest));
