@@ -26,7 +26,7 @@ namespace CleanTodo.Api.Controllers
 
         [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTodoItemRequest request)
+        public async Task<IActionResult> Create(TodoItemRequest request)
         {
             return Ok(await _mediator.Send(new CreateTodoItemCommand(request)));
         }

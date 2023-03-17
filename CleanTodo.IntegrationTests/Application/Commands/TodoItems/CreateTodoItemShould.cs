@@ -15,7 +15,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
         [Fact]
         public async Task GivenValidTodoItemRequest_WhenHandled_WillSucceed()
         {
-            var request = new CreateTodoItemRequest()
+            var request = new TodoItemRequest()
             {
                 Description = "This is a todo item.",
             };
@@ -34,7 +34,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
             var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
 
-            var createTodoRequest = new CreateTodoItemRequest { Description = "Todo item..." };
+            var createTodoRequest = new TodoItemRequest { Description = "Todo item..." };
             createTodoRequest.TagIds.Add(firstTagResponse.Id);
             createTodoRequest.TagIds.Add(secondTagResponse.Id);
 

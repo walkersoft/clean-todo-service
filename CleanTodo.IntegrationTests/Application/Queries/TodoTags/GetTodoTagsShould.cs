@@ -32,7 +32,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
                 new CreateTodoTagCommand(new TodoTagRequest() { Name = "Foo" })
             );
 
-            var itemRequest = new CreateTodoItemRequest() { Description = "Bar" };
+            var itemRequest = new TodoItemRequest() { Description = "Bar" };
             itemRequest.TagIds.Add(tagResponse.Id);
             await _mediator.Send(new CreateTodoItemCommand(itemRequest));
             
@@ -63,7 +63,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoTags
                 new CreateTodoTagCommand(new TodoTagRequest() { Name = "Foo" })
             );
 
-            var itemRequest = new CreateTodoItemRequest() { Description = "Bar" };
+            var itemRequest = new TodoItemRequest() { Description = "Bar" };
             itemRequest.TagIds.Add(tagResponse.Id);
             await _mediator.Send(new CreateTodoItemCommand(itemRequest));
 

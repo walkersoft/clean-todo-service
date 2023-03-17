@@ -51,7 +51,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
             var createTagRequest = new TodoTagRequest() { Name = "Foo" };
             var createTagResponse = await _mediator.Send(new CreateTodoTagCommand(createTagRequest));
 
-            var createItemRequest = new CreateTodoItemRequest() { Description = "Bar" };
+            var createItemRequest = new TodoItemRequest() { Description = "Bar" };
             createItemRequest.TagIds.Add(createTagResponse.Id);
             await _mediator.Send(new CreateTodoItemCommand(createItemRequest));
 

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CleanTodo.Core.Application.Commands.TodoItems
 {
-    public record CreateTodoItemCommand(CreateTodoItemRequest Data) : IRequest<TodoItemResponse>;
+    public record CreateTodoItemCommand(TodoItemRequest Data) : IRequest<TodoItemResponse>;
 
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, TodoItemResponse>
     {
