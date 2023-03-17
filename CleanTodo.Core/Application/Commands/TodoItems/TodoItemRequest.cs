@@ -1,9 +1,10 @@
-﻿using CleanTodo.Core.Application.Interfaces.Mapping;
+﻿using CleanTodo.Core.Application.Common;
+using CleanTodo.Core.Application.Interfaces.Mapping;
 using CleanTodo.Core.Entities;
 
 namespace CleanTodo.Core.Application.Commands.TodoItems
 {
-    public class TodoItemRequest : IMapTo<TodoItem>
+    public class TodoItemRequest : BaseDto, IMapTo<TodoItem>
     {
         public string Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }
