@@ -1,4 +1,5 @@
-﻿using CleanTodo.Core.Application.Commands.TodoItems;
+﻿using CleanTodo.Api.Middleware.Exceptions;
+using CleanTodo.Core.Application.Commands.TodoItems;
 using CleanTodo.Core.Application.Queries.TodoItems;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,7 @@ namespace CleanTodo.Api.Controllers
         }
 
         [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
         [HttpPut]
         public async Task<IActionResult> Update(TodoItemRequest request)
         {
