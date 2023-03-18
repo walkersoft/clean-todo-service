@@ -3,10 +3,11 @@ using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoItems;
 using CleanTodo.Core.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanTodo.Core.Application.Commands.TodoItems
 {
-    public record CreateTodoItemCommand(CreateTodoItemRequest Data) : IRequest<TodoItemResponse>;
+    public record CreateTodoItemCommand(TodoItemRequest Data) : IRequest<TodoItemResponse>;
 
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, TodoItemResponse>
     {
@@ -22,10 +23,11 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
         public async Task<TodoItemResponse> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             var todoItem = _mapper.Map<TodoItem>(request.Data);
-            _context.TodoTags
+            var tags = await _context.TodoTags
                 .Where(tag => request.Data.TagIds.Contains(tag.Id))
-                .ToList()
-                .ForEach(tag => todoItem.Tags.Add(tag));
+                .ToListAsync(cancellationToken);
+                
+            tags.ForEach(tag => todoItem.Tags.Add(tag));
 
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();

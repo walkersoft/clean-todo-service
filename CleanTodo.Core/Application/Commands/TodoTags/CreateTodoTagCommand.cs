@@ -3,6 +3,7 @@ using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,9 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
         public async Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
         {
             // See if this tag already exists, ignoring case-sensitivity
-            var tag = _context.TodoTags
+            var tag = await _context.TodoTags
                 .Where(tag => request.Data.Name.ToLower().Trim() == tag.Name.ToLower().Trim())
-                .FirstOrDefault();
+                .SingleOrDefaultAsync(cancellationToken);
 
             // If the tag does not exist, create it
             if (tag == null)
