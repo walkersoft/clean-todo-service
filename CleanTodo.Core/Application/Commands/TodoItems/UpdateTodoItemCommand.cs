@@ -3,6 +3,7 @@ using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoItems;
 using CleanTodo.Core.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +33,12 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             todoItem.IsActive = request.Data.IsActive;
             todoItem.RollsOver  = request.Data.RollsOver;
             todoItem.Tags.Clear();
-            
-            request.Data.TagIds
-                .Select(tagId => _context.FirstOrNotFound<TodoTag>(tagId))
-                .ToList()
-                .ForEach(tag => todoItem.Tags.Add(tag.Result));
+
+            var tags = await _context.TodoTags
+                .Where(t => request.Data.TagIds.Contains(t.Id))
+                .ToListAsync(cancellationToken);
+
+            tags.ForEach(tag => todoItem.Tags.Add(tag));
 
             await _context.SaveChangesAsync();
 
