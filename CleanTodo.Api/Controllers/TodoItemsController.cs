@@ -30,5 +30,12 @@ namespace CleanTodo.Api.Controllers
         {
             return Ok(await _mediator.Send(new CreateTodoItemCommand(request)));
         }
+
+        [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
+        [HttpPut]
+        public async Task<IActionResult> Update(TodoItemRequest request)
+        {
+            return Ok(await _mediator.Send(new UpdateTodoItemCommand(request)));
+        }
     }
 }
