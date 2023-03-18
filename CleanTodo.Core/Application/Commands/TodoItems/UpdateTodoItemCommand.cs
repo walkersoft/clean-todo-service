@@ -40,6 +40,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
 
             tags.ForEach(tag => todoItem.Tags.Add(tag));
 
+            _context.TodoItems.Update(todoItem);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<TodoItemResponse>(todoItem);            
