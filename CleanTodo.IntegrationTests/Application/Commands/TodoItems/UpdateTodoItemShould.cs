@@ -1,6 +1,7 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoItems;
 using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Application.Queries.TodoItems;
+using CleanTodo.Core.Exceptions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,20 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             todoItem.DueDate.Should().Be(updateTodoItemRequest.DueDate);
             todoItem.Tags.Count.Should().Be(1);
             todoItem.Tags.First().Should().Be(createBarTagResponse.Id);
+        }
+
+        [Fact]
+        public async Task GivenTodoItemThatDoesNotExist_WhenHandled_ThrowsException()
+        {
+            var updateTodoItemRequest = new TodoItemRequest()
+            {
+                Id = Guid.NewGuid(),
+                Description = "Foo"
+            };
+
+            var updateAction = () => _mediator.Send(new UpdateTodoItemCommand(updateTodoItemRequest));
+
+            await updateAction.Should().ThrowAsync<EntityNotFoundException>();
         }
     }
 }
