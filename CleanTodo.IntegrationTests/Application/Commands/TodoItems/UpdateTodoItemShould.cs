@@ -60,7 +60,6 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
                 DueDate = DateTime.Today.AddDays(1),
                 RollsOver = false
             };
-            updateTodoItemRequest.TagIds.Add(createFooTagResponse.Id);
             updateTodoItemRequest.TagIds.Add(createBarTagResponse.Id);
 
             await _mediator.Send(new UpdateTodoItemCommand(updateTodoItemRequest));
@@ -74,7 +73,8 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             todoItem.IsActive.Should().BeFalse();
             todoItem.RollsOver.Should().BeFalse();
             todoItem.DueDate.Should().Be(updateTodoItemRequest.DueDate);
-            todoItem.Tags.Count.Should().Be(2);
+            todoItem.Tags.Count.Should().Be(1);
+            todoItem.Tags.First().Should().Be(createBarTagResponse.Id);
         }
     }
 }
