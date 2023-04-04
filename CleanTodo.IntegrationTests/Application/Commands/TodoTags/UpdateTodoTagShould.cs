@@ -35,5 +35,20 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             await action.Should().ThrowAsync<EntityNotFoundException>();
         }
+
+        [Fact]
+        public async Task GivenUpdatedTagNameThatAlreadyExists_WhenHandled_WillThrowInvalidOperationException()
+        {
+            var firstCreateRequest = new TodoTagRequest() { Name = "Foo" };
+            var firstCreateResponse = await _mediator.Send(new CreateTodoTagCommand(firstCreateRequest));
+
+            var secondCreateRequest = new TodoTagRequest() { Name = "Bar" };
+            await _mediator.Send(new CreateTodoTagCommand(secondCreateRequest));
+
+            var updateRequest = new TodoTagRequest() { Id = firstCreateResponse.Id, Name = "Bar" };
+            var action = async () => await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
+
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
     }
 }
