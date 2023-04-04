@@ -37,7 +37,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         }
 
         [Fact]
-        public async Task GivenUpdatedTagNameThatAlreadyExists_WhenHandled_WillThrowInvalidOperationException()
+        public async Task GivenUpdatedTagNameThatAlreadyExists_WhenHandled_WillThrowException()
         {
             var firstCreateRequest = new TodoTagRequest() { Name = "Foo" };
             var firstCreateResponse = await _mediator.Send(new CreateTodoTagCommand(firstCreateRequest));
