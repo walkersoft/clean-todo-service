@@ -48,7 +48,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
             var updateRequest = new TodoTagRequest() { Id = firstCreateResponse.Id, Name = "Bar" };
             var action = async () => await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
 
-            await action.Should().ThrowAsync<InvalidOperationException>();
+            await action.Should().ThrowAsync<DuplicateTagException>();
         }
     }
 }
