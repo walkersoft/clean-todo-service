@@ -2,6 +2,7 @@
 using CleanTodo.Core.Entities;
 using CleanTodo.Core.Exceptions;
 using CleanTodo.Infrastructure.Data.Extensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanTodo.Infrastructure.Data
@@ -42,6 +44,15 @@ namespace CleanTodo.Infrastructure.Data
         public Task<TEntity> FirstOrNotFound<TEntity>(Guid id) where TEntity : BaseEntity
         {
             return Set<TEntity>().FirstOrNotFound(id);
+        }
+
+        public async Task<Guid> GetExistingTagId(string tagName)
+        {
+            var tag = await TodoTags
+               .Where(tag => tagName.ToLower().Trim() == tag.Name.ToLower().Trim())
+               .SingleOrDefaultAsync();
+
+            return tag == default ? Guid.Empty : tag.Id;
         }
     }
 }

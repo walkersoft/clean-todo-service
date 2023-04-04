@@ -2,6 +2,7 @@
 using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
+using CleanTodo.Core.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,19 +28,20 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
         public async Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
         {
-            // See if this tag already exists, ignoring case-sensitivity
-            var tag = await _context.TodoTags
-                .Where(tag => request.Data.Name.ToLower().Trim() == tag.Name.ToLower().Trim())
-                .SingleOrDefaultAsync(cancellationToken);
-
-            // If the tag does not exist, create it
-            if (tag == null)
+            // Verify a tag with this name does not exist already
+            if (await _context.GetExistingTagId(request.Data.Name) != Guid.Empty)
             {
-                tag = _mapper.Map<TodoTag>(request.Data);
-                tag.Name = tag.Name.Trim();
-                _context.TodoTags.Add(tag);
-                await _context.SaveChangesAsync();
-            }            
+                throw new DuplicateTagException(string.Format(
+                    "Unable to create tag. A tag with name: {0} already exists.",
+                    request.Data.Name
+                ));
+            }
+
+            var tag = _mapper.Map<TodoTag>(request.Data);
+            tag.Name = tag.Name.Trim();
+            _context.TodoTags.Add(tag);
+
+            await _context.SaveChangesAsync();      
 
             return _mapper.Map<TodoTagResponse>(tag);
         }

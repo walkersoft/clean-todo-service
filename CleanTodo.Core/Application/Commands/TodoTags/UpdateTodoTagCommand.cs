@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using CleanTodo.Core.Application.Interfaces.Persitence;
-using CleanTodo.Core.Application.Queries.TodoItems;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
+using CleanTodo.Core.Exceptions;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Application.Commands.TodoTags
 {
@@ -27,8 +22,21 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
 
         public async Task<TodoTagResponse> Handle(UpdateTodoTagCommand request, CancellationToken cancellationToken)
         {
+            // Verify the tag exists
             var tag = await _context.FirstOrNotFound<TodoTag>(request.Data.Id);
-            tag.Name = request.Data.Name;
+
+            // Verify this update won't result in a duplicate tag name
+            var existingTagId = await _context.GetExistingTagId(request.Data.Name);
+            if (existingTagId != tag.Id && existingTagId != Guid.Empty)
+            {
+                throw new DuplicateTagException(string.Format(
+                    "Unable to edit tag with Id: {0} to name: {1}. A tag with this name already exists.",
+                    request.Data.Id,
+                    request.Data.Name
+                ));
+            }
+
+            tag.Name = request.Data.Name.Trim();
             _context.TodoTags.Update(tag);
             await _context.SaveChangesAsync();
 
