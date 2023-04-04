@@ -1,6 +1,7 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
+using CleanTodo.Core.Exceptions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -27,41 +28,27 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
         }
 
         [Fact]
-        public async Task GivenDuplicateNameWithDifferentCase_WhenHandled_WillReturnExistingTag()
+        public async Task GivenDuplicateNameWithDifferentCase_WhenHandled_WillThrowException()
         {
             var firstTagRequest = new TodoTagRequest() { Name = "Foo" };
             var secondTagRequest = new TodoTagRequest() { Name = "foo" };
 
-            var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
-            var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
+            await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
+            var action = async () => await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
 
-            _dbContext.ChangeTracker.Clear();
-            var allTagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
-
-            allTagsResponse.Should().NotBeEmpty();
-            allTagsResponse.Should().HaveCount(1);
-            allTagsResponse.First().Id
-                .Should().Be(firstTagResponse.Id)
-                .And.Be(secondTagResponse.Id);
+            await action.Should().ThrowAsync<DuplicateTagException>();
         }
 
         [Fact]
-        public async Task GivenDuplicateNameWithLeadingOrTrailingWhitespace_WhenHandled_WillReturnExistingTag()
+        public async Task GivenDuplicateNameWithLeadingOrTrailingWhitespace_WhenHandled_WillThrowException()
         {
             var firstTagRequest = new TodoTagRequest() { Name = "Foo" };
             var secondTagRequest = new TodoTagRequest() { Name = " Foo " };
 
-            var firstTagResponse = await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
-            var secondTagResponse = await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
+            await _mediator.Send(new CreateTodoTagCommand(firstTagRequest));
+            var action = async () => await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
 
-            _dbContext.ChangeTracker.Clear();
-            var allTagsResponse = await _mediator.Send(new GetAllTodoTagsQuery());
-
-            allTagsResponse.Should().NotBeEmpty();
-            allTagsResponse.Should().HaveCount(1);
-            allTagsResponse.First().Id
-                .Should().Be(firstTagResponse.Id)
-                .And.Be(secondTagResponse.Id);
+            await action.Should().ThrowAsync<DuplicateTagException>();
         }
     }
 }
