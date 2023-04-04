@@ -26,6 +26,7 @@ namespace CleanTodo.Api.Controllers
         }
 
         [ProducesResponseType(typeof(TodoTagResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status400BadRequest)]
         [HttpPost]
         public async Task<IActionResult> Create(TodoTagRequest request)
         {
@@ -33,6 +34,7 @@ namespace CleanTodo.Api.Controllers
         }
 
         [ProducesResponseType(typeof(TodoTagResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
         [HttpPut]
         public async Task<IActionResult> Update(TodoTagRequest request)
