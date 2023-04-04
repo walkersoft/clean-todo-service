@@ -30,7 +30,7 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
             if (existingTagId != tag.Id && existingTagId != Guid.Empty)
             {
                 throw new DuplicateTagException(string.Format(
-                    "Unabled to edit tag with Id: {0} to name: {1}. A tag with this name already exists.",
+                    "Unable to edit tag with Id: {0} to name: {1}. A tag with this name already exists.",
                     request.Data.Id,
                     request.Data.Name
                 ));
