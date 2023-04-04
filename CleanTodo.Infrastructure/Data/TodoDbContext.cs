@@ -46,13 +46,13 @@ namespace CleanTodo.Infrastructure.Data
             return Set<TEntity>().FirstOrNotFound(id);
         }
 
-        public async Task<bool> TagNameExists(string tagName)
+        public async Task<Guid> GetExistingTagId(string tagName)
         {
-            var tagExists = await TodoTags
+            var tag = await TodoTags
                .Where(tag => tagName.ToLower().Trim() == tag.Name.ToLower().Trim())
-               .AnyAsync();
+               .SingleOrDefaultAsync();
 
-            return tagExists;
+            return tag == default ? Guid.Empty : tag.Id;
         }
     }
 }

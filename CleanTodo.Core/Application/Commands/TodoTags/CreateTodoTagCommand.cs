@@ -29,7 +29,7 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
         public async Task<TodoTagResponse> Handle(CreateTodoTagCommand request, CancellationToken cancellationToken)
         {
             // Verify a tag with this name does not exist already
-            if (await _context.TagNameExists(request.Data.Name))
+            if (await _context.GetExistingTagId(request.Data.Name) != Guid.Empty)
             {
                 throw new DuplicateTagException(string.Format(
                     "Unable to create tag. A tag with name: {0} already exists.",

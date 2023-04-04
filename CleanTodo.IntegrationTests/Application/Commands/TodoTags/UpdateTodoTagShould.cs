@@ -50,5 +50,38 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             await action.Should().ThrowAsync<DuplicateTagException>();
         }
+
+        [Fact]
+        public async Task GivenUpdatedDuplicateTagNameOfExistingTag_WhenHandled_WillSucceed()
+        {
+            var firstCreateRequest = new TodoTagRequest() { Name = "Foo" };
+            await _mediator.Send(new CreateTodoTagCommand(firstCreateRequest));
+
+            var secondCreateRequest = new TodoTagRequest() { Name = "Bar" };
+            var secondCreateResponse = await _mediator.Send(new CreateTodoTagCommand(secondCreateRequest));
+
+            var updateRequest = new TodoTagRequest() { Id = secondCreateResponse.Id, Name = "bar" };
+            var updateResponse = await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
+
+            updateResponse.Id.Should().Be(secondCreateResponse.Id);
+            updateResponse.Name.Should().Be(updateRequest.Name);
+        }
+
+        [Fact]
+        public async Task GivenUpdatedDuplicateTagNameOfExistingTag_WhenHandled_WillSucceedAndTrimWhitespace()
+        {
+            var firstCreateRequest = new TodoTagRequest() { Name = "Foo" };
+            await _mediator.Send(new CreateTodoTagCommand(firstCreateRequest));
+
+            var secondCreateRequest = new TodoTagRequest() { Name = "Bar" };
+            var secondCreateResponse = await _mediator.Send(new CreateTodoTagCommand(secondCreateRequest));
+
+            var updateRequest = new TodoTagRequest() { Id = secondCreateResponse.Id, Name = " bar " };
+            var updateResponse = await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
+            var trimmedName = updateRequest.Name.Trim();
+
+            updateResponse.Id.Should().Be(secondCreateResponse.Id);
+            updateResponse.Name.Should().Be(trimmedName);
+        }
     }
 }

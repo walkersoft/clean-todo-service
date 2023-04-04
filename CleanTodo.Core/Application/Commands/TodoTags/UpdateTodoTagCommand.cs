@@ -26,7 +26,8 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
             var tag = await _context.FirstOrNotFound<TodoTag>(request.Data.Id);
 
             // Verify this update won't result in a duplicate tag name
-            if (await _context.TagNameExists(request.Data.Name) && request.Data.Id == tag.Id)
+            var existingTagId = await _context.GetExistingTagId(request.Data.Name);
+            if (existingTagId != tag.Id && existingTagId != Guid.Empty)
             {
                 throw new DuplicateTagException(string.Format(
                     "Unabled to edit tag with Id: {0} to name: {1}. A tag with this name already exists.",
