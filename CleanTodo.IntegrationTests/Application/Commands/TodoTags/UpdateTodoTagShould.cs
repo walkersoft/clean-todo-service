@@ -45,7 +45,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
             var secondCreateRequest = new TodoTagRequest() { Name = "Bar" };
             await _mediator.Send(new CreateTodoTagCommand(secondCreateRequest));
 
-            var updateRequest = new TodoTagRequest() { Id = firstCreateResponse.Id, Name = "Bar" };
+            var updateRequest = new TodoTagRequest() { Id = firstCreateResponse.Id, Name = "bar" };
             var action = async () => await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
 
             await action.Should().ThrowAsync<DuplicateTagException>();
