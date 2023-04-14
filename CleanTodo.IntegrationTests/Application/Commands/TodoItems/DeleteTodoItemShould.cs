@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoItems;
+using CleanTodo.Core.Exceptions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
         public DeleteTodoItemShould() : base() { }
 
         [Fact]
-
         public async Task GivenTodoItemThatExists_WhenHandled_WillDeleteTodoItem()
         {
             var createRequest = new TodoItemRequest() { Description = "Foo" };
@@ -24,6 +24,13 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             var deleteAction = async () => await _mediator.Send(new DeleteTodoItemCommand(createResponse.Id));
 
             await deleteAction.Should().NotThrowAsync();
+        }
+
+        [Fact]
+        public async Task GivenTodoItemThatDoesNotExist_WhenHandled_WillThrowException()
+        {
+            var deleteAction = async () => await _mediator.Send(new DeleteTodoItemCommand(Guid.NewGuid()));
+            await deleteAction.Should().ThrowAsync<EntityNotFoundException>();
         }
     }
 }
