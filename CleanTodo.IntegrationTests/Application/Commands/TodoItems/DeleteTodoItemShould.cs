@@ -19,6 +19,7 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
         {
             var createRequest = new TodoItemRequest() { Description = "Foo" };
             var createResponse = await _mediator.Send(new CreateTodoItemCommand(createRequest));
+            _dbContext.ChangeTracker.Clear();
 
             var deleteAction = async () => await _mediator.Send(new DeleteTodoItemCommand(createResponse.Id));
 

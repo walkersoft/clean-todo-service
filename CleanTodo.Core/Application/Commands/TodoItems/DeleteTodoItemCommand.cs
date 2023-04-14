@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using CleanTodo.Core.Application.Interfaces.Persitence;
+using CleanTodo.Core.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,20 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
 
     public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, Unit>
     {
-        public Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
+        private readonly ITodoApplicationDbContext _context;
+
+        public DeleteTodoItemCommandHandler(ITodoApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
+        {
+            var todoItem = await _context.FirstOrNotFound<TodoItem>(request.Id);
+            _context.TodoItems.Remove(todoItem);
+            await _context.SaveChangesAsync();
+
+            return Unit.Value;
         }
     }
 }
