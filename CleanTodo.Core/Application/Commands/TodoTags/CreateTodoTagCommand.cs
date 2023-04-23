@@ -3,6 +3,7 @@ using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
 using CleanTodo.Core.Exceptions;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,9 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
             }
 
             var tag = _mapper.Map<TodoTag>(request.Data);
+            var validator = new TodoTagValidator();
+            await validator.ValidateAndThrowAsync(tag, cancellationToken);
+
             tag.Name = tag.Name.Trim();
             _context.TodoTags.Add(tag);
 

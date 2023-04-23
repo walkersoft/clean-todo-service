@@ -1,5 +1,6 @@
 ﻿using CleanTodo.Core.Application.Interfaces.Mapping;
 using CleanTodo.Core.Application.Queries.TodoTags;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,14 @@ namespace CleanTodo.Core.Entities
         public TodoTag()
         {
             TodoItems = new List<TodoItem>();
+        }
+    }
+
+    public class TodoTagValidator : AbstractValidator<TodoTag>
+    {
+        public TodoTagValidator()
+        {
+            RuleFor(tag => tag.Name).NotEmpty();
         }
     }
 }
