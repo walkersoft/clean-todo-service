@@ -45,7 +45,7 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
             tag.Name = tag.Name.Trim();
             _context.TodoTags.Add(tag);
 
-            await _context.SaveChangesAsync();      
+            await _context.SaveChangesAsync();
 
             return _mapper.Map<TodoTagResponse>(tag);
         }
