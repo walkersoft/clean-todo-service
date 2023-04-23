@@ -12,7 +12,7 @@ namespace CleanTodo.Core.Entities
     public class TodoTag : BaseEntity, IMapTo<TodoTagResponse>
     {
         public string Name { get; set; } = string.Empty;
-        public ICollection<TodoItem> TodoItems { get; private set; }
+        public ICollection<TodoItem> TodoItems { get; }
 
         public TodoTag()
         {
@@ -24,7 +24,7 @@ namespace CleanTodo.Core.Entities
     {
         public TodoTagValidator()
         {
-            RuleFor(tag => tag.Name).NotEmpty();
+            RuleFor(tag => tag.Name).NotEmpty().WithMessage("Tag name cannot be empty.");
         }
     }
 }
