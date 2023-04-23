@@ -3,6 +3,7 @@ using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
 using CleanTodo.Core.Exceptions;
 using FluentAssertions;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,16 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
             var action = async () => await _mediator.Send(new CreateTodoTagCommand(secondTagRequest));
 
             await action.Should().ThrowAsync<DuplicateTagException>();
+        }
+
+        [Fact]
+        public async Task GivenTodoTagWithNoName_WhenHandled_WillThrowException()
+        {
+            var tagRequest = new TodoTagRequest() { Name = "" };
+
+            var action = async () => await _mediator.Send(new CreateTodoTagCommand(tagRequest));
+
+            await action.Should().ThrowAsync<ValidationException>();
         }
     }
 }
