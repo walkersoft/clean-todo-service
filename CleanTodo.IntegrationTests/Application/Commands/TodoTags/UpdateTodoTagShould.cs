@@ -1,6 +1,7 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoTags;
 using CleanTodo.Core.Exceptions;
 using FluentAssertions;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,6 +83,18 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoTags
 
             updateResponse.Id.Should().Be(secondCreateResponse.Id);
             updateResponse.Name.Should().Be(trimmedName);
+        }
+
+        [Fact]
+        public async Task GivenUpdateOfExistingTagWithoutName_WhenHandled_WillThrowException()
+        {
+            var firstCreateRequest = new TodoTagRequest() { Name = "Foo" };
+            var firstCreateResponse = await _mediator.Send(new CreateTodoTagCommand(firstCreateRequest));
+
+            var updateRequest = new TodoTagRequest() { Id = firstCreateResponse.Id, Name = "" };
+            var action = async () => await _mediator.Send(new UpdateTodoTagCommand(updateRequest));
+
+            await action.Should().ThrowAsync<ValidationException>();
         }
     }
 }
