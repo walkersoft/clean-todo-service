@@ -3,6 +3,7 @@ using CleanTodo.Core.Application.Interfaces.Persitence;
 using CleanTodo.Core.Application.Queries.TodoTags;
 using CleanTodo.Core.Entities;
 using CleanTodo.Core.Exceptions;
+using FluentValidation;
 using MediatR;
 
 namespace CleanTodo.Core.Application.Commands.TodoTags
@@ -37,6 +38,10 @@ namespace CleanTodo.Core.Application.Commands.TodoTags
             }
 
             tag.Name = request.Data.Name.Trim();
+
+            var validator = new TodoTagValidator();
+            await validator.ValidateAndThrowAsync(tag, cancellationToken);
+
             _context.TodoTags.Update(tag);
             await _context.SaveChangesAsync();
 

@@ -1,4 +1,5 @@
 ﻿using CleanTodo.Core.Exceptions;
+using FluentValidation;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -22,7 +23,9 @@ namespace CleanTodo.Api.Middleware.Exceptions
         {
             context.Response.StatusCode = ex switch
             {
-                AssignedTagRemovalException or DuplicateTagException => StatusCodes.Status400BadRequest,
+                AssignedTagRemovalException or
+                DuplicateTagException or
+                ValidationException => StatusCodes.Status400BadRequest,
                 EntityNotFoundException => StatusCodes.Status404NotFound,
                 _ => StatusCodes.Status500InternalServerError
             };
