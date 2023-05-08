@@ -28,6 +28,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
                 .ToListAsync(cancellationToken);
                 
             tags.ForEach(tag => todoItem.Tags.Add(tag));
+            todoItem.DueDate = todoItem.DueDate.Date;
 
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
