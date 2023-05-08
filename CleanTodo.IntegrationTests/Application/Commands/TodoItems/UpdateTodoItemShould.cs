@@ -91,5 +91,24 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
 
             await updateAction.Should().ThrowAsync<EntityNotFoundException>();
         }
+
+        [Fact]
+        public async Task GivenTodoItemWithDueDate_WhenHandled_WillResetTimeComponent()
+        {
+            var createRequest = new TodoItemRequest() { Description = "Foo" };
+            var createResponse = await _mediator.Send(new CreateTodoItemCommand(createRequest));
+
+            _dbContext.ChangeTracker.Clear();
+
+            var updateRequest = new TodoItemRequest()
+            {
+                Id = createResponse.Id,
+                Description = "Bar",
+                DueDate = DateTime.Now
+            };
+            var updateResponse = await _mediator.Send(new UpdateTodoItemCommand(updateRequest));
+
+            updateResponse.DueDate.Should().Be(updateResponse.DueDate.Date);
+        }
     }
 }
