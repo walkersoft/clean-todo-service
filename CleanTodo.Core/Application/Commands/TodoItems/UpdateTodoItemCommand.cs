@@ -43,7 +43,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             }
 
             todoItem.Description = request.Data.Description;
-            todoItem.DueDate = request.Data.DueDate;
+            todoItem.DueDate = request.Data.DueDate.Date;
             todoItem.IsActive = request.Data.IsActive;
             todoItem.RollsOver  = request.Data.RollsOver;
             todoItem.Tags.Clear();
