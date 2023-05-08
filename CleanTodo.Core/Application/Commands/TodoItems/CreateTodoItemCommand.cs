@@ -26,7 +26,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             var tags = await _context.TodoTags
                 .Where(tag => request.Data.TagIds.Contains(tag.Id))
                 .ToListAsync(cancellationToken);
-                
+
             tags.ForEach(tag => todoItem.Tags.Add(tag));
             todoItem.DueDate = todoItem.DueDate.Date;
 
