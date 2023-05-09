@@ -44,5 +44,15 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             createTodoResponse.Tags.Should().Contain(firstTagResponse.Id);
             createTodoResponse.Tags.Should().Contain(secondTagResponse.Id);
         }
+
+        [Fact]
+        public async Task GivenTodoItemWithDueDate_WhenHandled_WillResetTimeComponent()
+        {
+            var createTodoRequest = new TodoItemRequest { Description = "Todo item...", DueDate = DateTime.Now };
+
+            var createTodoResponse = await _mediator.Send(new CreateTodoItemCommand(createTodoRequest));
+
+            createTodoResponse.DueDate.Should().Be(createTodoRequest.DueDate.Date);
+        }
     }
 }

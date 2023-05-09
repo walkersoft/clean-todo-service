@@ -33,7 +33,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
                 .Include(x => x.Tags)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if (todoItem == null)
+            if (todoItem == default)
             {
                 throw new EntityNotFoundException(string.Format(
                     "Unable to locate entity of type: {0} with ID: {1} in the database.",
@@ -43,7 +43,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             }
 
             todoItem.Description = request.Data.Description;
-            todoItem.DueDate = request.Data.DueDate;
+            todoItem.DueDate = request.Data.DueDate.Date;
             todoItem.IsActive = request.Data.IsActive;
             todoItem.RollsOver  = request.Data.RollsOver;
             todoItem.Tags.Clear();
@@ -59,8 +59,7 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             _context.TodoItems.Update(todoItem);
             await _context.SaveChangesAsync();
 
-            var mapped = _mapper.Map<TodoItemResponse>(todoItem);
-            return mapped;
+            return _mapper.Map<TodoItemResponse>(todoItem);
         }
     }
 }
