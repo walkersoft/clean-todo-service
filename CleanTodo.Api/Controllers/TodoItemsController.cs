@@ -48,5 +48,13 @@ namespace CleanTodo.Api.Controllers
             await _mediator.Send(new DeleteTodoItemCommand(id));
             return NoContent();
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
+        [HttpPut("SetCompletion")]
+        public async Task<IActionResult> SetCompletion(Guid id, bool completionStatus)
+        {
+            return Ok(await _mediator.Send(new SetTodoItemCompletionStatusCommand(id, completionStatus)));
+        }
     }
 }
