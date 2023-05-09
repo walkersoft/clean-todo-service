@@ -47,5 +47,23 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
 
             response.First().RollOverCount.Should().Be(3);
         }
+
+        [Fact]
+        public async Task FetchTodoItems_WillItemsThatDoNotRollOver_WillHaveZeroRollOverQuantity()
+        {
+            var createRequest = new TodoItemRequest()
+            {
+                Description = "This is a todo item.",
+                DueDate = DateTime.Now.AddDays(-3),
+                RollsOver = false
+            };
+
+            await _mediator.Send(new CreateTodoItemCommand(createRequest));
+
+            _dbContext.ChangeTracker.Clear();
+            var response = await _mediator.Send(new GetAllTodoItemsQuery());
+
+            response.First().RollOverCount.Should().Be(0);
+        }
     }
 }
