@@ -26,7 +26,21 @@ namespace CleanTodo.Core.Application.Queries.TodoItems
                 .ProjectTo<ProjectedTodoItemResponse>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
+            CalculateRollOverQuantities(items.Where(item => item.RollsOver));
+
             return items;
+        }
+
+        private static void CalculateRollOverQuantities(IEnumerable<ProjectedTodoItemResponse> rollingItems)
+        {
+            var today = DateTime.Today;
+            foreach (var rollingItem in rollingItems)
+            {
+                if (rollingItem.DueDate < today)
+                {
+                    rollingItem.RollOverCount = (today - rollingItem.DueDate).Days;
+                }
+            }
         }
     }
 }
