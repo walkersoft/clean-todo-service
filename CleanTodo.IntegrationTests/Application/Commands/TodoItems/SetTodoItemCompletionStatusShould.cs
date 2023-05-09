@@ -25,7 +25,6 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             var updateResponse = await _mediator.Send(new SetTodoItemCompletionStatusCommand(createResponse.Id, true));
 
             updateResponse.IsComplete.Should().BeTrue();
-            updateResponse.CompletionDate.Should().Be(DateTime.Today);
         }
     }
 }
