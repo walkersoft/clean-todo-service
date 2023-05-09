@@ -31,7 +31,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
         }
 
         [Fact]
-        public async Task FetchTodoItems_WillItemsThatRollOver_WillCalculateRollOverQuantity()
+        public async Task FetchTodoItems_WithItemsThatRollOver_WillCalculateRollOverQuantity()
         {
             var createRequest = new TodoItemRequest()
             {
@@ -49,7 +49,7 @@ namespace CleanTodo.IntegrationTests.Application.Queries.TodoItems
         }
 
         [Fact]
-        public async Task FetchTodoItems_WillItemsThatDoNotRollOver_WillHaveZeroRollOverQuantity()
+        public async Task FetchTodoItems_WithItemsThatDoNotRollOver_WillHaveZeroRollOverQuantity()
         {
             var createRequest = new TodoItemRequest()
             {
