@@ -23,6 +23,8 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
         {
             var todoItem = await _context.FirstOrNotFound<TodoItem>(request.Id);
             todoItem.IsComplete = request.IsComplete;
+            todoItem.CompletionDate = request.IsComplete ? DateTime.Today : null;
+
             _context.TodoItems.Update(todoItem);
             await _context.SaveChangesAsync();
 
