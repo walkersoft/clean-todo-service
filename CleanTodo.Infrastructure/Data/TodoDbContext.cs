@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,13 +28,8 @@ namespace CleanTodo.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TodoTag>().Navigation(x => x.TodoItems).AutoInclude();
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            base.OnConfiguring(options);
         }
 
         public async Task<int> SaveChangesAsync()
@@ -48,11 +44,11 @@ namespace CleanTodo.Infrastructure.Data
 
         public async Task<Guid> GetExistingTagId(string tagName)
         {
-            var tag = await TodoTags
-               .Where(tag => tagName.ToLower().Trim() == tag.Name.ToLower().Trim())
-               .SingleOrDefaultAsync();
+            var tag = await TodoTags.SingleOrDefaultAsync(
+                tag => tagName.ToLower().Trim() == tag.Name.ToLower().Trim()
+            );
 
-            return tag == default ? Guid.Empty : tag.Id;
+            return tag?.Id ?? Guid.Empty;
         }
     }
 }
