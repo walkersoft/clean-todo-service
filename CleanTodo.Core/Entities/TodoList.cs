@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CleanTodo.Core.Application.Interfaces.Mapping;
+using CleanTodo.Core.Application.Queries.TodoLists;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanTodo.Core.Entities
 {
-    public class TodoList : BaseEntity
+    public class TodoList : BaseEntity, IMapTo<TodoListResponse>
     {
         public string Description { get; set; } = string.Empty;
         public bool IsComplete { get; set; }
