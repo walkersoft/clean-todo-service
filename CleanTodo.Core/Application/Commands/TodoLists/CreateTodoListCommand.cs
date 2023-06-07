@@ -1,4 +1,7 @@
-﻿using CleanTodo.Core.Application.Queries.TodoLists;
+﻿using AutoMapper;
+using CleanTodo.Core.Application.Interfaces.Persitence;
+using CleanTodo.Core.Application.Queries.TodoLists;
+using CleanTodo.Core.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,9 +15,22 @@ namespace CleanTodo.Core.Application.Commands.TodoLists
 
     public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, TodoListResponse>
     {
-        public Task<TodoListResponse> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
+        private readonly ITodoApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public CreateTodoListCommandHandler(ITodoApplicationDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<TodoListResponse> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
+        {
+            var todoList = _mapper.Map<TodoList>(request.Data);
+            _context.TodoLists.Add(todoList);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<TodoListResponse>(todoList);
         }
     }
 }
