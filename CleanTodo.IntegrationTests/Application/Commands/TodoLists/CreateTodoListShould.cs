@@ -14,7 +14,6 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoLists
         {
             var request = new TodoListRequest()
             {
-                Title = "Title",
                 Description = "Description",
             };
 
