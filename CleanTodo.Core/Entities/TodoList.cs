@@ -11,6 +11,7 @@ namespace CleanTodo.Core.Entities
 {
     public class TodoList : BaseEntity, IMapTo<TodoListResponse>
     {
+        public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public bool IsComplete { get; set; }
         public DateTime DueDate { get; set; }
