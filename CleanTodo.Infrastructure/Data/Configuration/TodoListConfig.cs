@@ -15,8 +15,8 @@ namespace CleanTodo.Infrastructure.Data.Configuration
         {
             builder.Property(x => x.Title).HasMaxLength(100);
             builder.Property(x => x.Description).HasMaxLength(500);
-            builder.Property(x => x.DueDate).HasDefaultValue("GETDATE()");
-            builder.Property(x => x.ActivationDate).HasDefaultValue("GETDATE()");
+            builder.Property(x => x.DueDate).HasDefaultValueSql("GETDATE()");
+            builder.Property(x => x.ActivationDate).HasDefaultValueSql("GETDATE()");
             builder.HasMany(x => x.TodoItems);
         }
     }
