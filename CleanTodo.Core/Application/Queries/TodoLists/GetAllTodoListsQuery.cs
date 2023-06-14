@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using CleanTodo.Core.Application.Interfaces.Persitence;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +14,22 @@ namespace CleanTodo.Core.Application.Queries.TodoLists
 
     public class GetAllTodoListsQueryHandler : IRequestHandler<GetAllTodoListsQuery, IEnumerable<TodoListResponse>>
     {
-        public Task<IEnumerable<TodoListResponse>> Handle(GetAllTodoListsQuery request, CancellationToken cancellationToken)
+        private readonly ITodoApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public GetAllTodoListsQueryHandler(ITodoApplicationDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<TodoListResponse>> Handle(GetAllTodoListsQuery request, CancellationToken cancellationToken)
+        {
+            var lists = await _context.TodoLists
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            return lists.Select(list => _mapper.Map<TodoListResponse>(list));
         }
     }
 }
