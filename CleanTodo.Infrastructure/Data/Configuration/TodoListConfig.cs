@@ -13,9 +13,10 @@ namespace CleanTodo.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<TodoList> builder)
         {
+            builder.Property(x => x.Title).HasMaxLength(100);
             builder.Property(x => x.Description).HasMaxLength(500);
-            builder.Property(x => x.DueDate).HasDefaultValue(DateTime.Now);
-            builder.Property(x => x.ActivationDate).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.DueDate).HasDefaultValueSql("GETDATE()");
+            builder.Property(x => x.ActivationDate).HasDefaultValueSql("GETDATE()");
             builder.HasMany(x => x.TodoItems);
         }
     }

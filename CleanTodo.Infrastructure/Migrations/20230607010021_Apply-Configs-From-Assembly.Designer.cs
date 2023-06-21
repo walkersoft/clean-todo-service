@@ -4,6 +4,7 @@ using CleanTodo.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanTodo.Infrastructure.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    partial class TodoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230607010021_Apply-Configs-From-Assembly")]
+    partial class ApplyConfigsFromAssembly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +41,7 @@ namespace CleanTodo.Infrastructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 13, 20, 5, 6, 605, DateTimeKind.Local).AddTicks(8552));
+                        .HasDefaultValue(new DateTime(2023, 6, 6, 20, 0, 21, 273, DateTimeKind.Local).AddTicks(6123));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -72,7 +74,7 @@ namespace CleanTodo.Infrastructure.Migrations
                     b.Property<DateTime?>("ActivationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasDefaultValue(new DateTime(2023, 6, 6, 20, 0, 21, 273, DateTimeKind.Local).AddTicks(6963));
 
                     b.Property<DateTime?>("CompletionDate")
                         .HasColumnType("datetime2");
@@ -85,15 +87,10 @@ namespace CleanTodo.Infrastructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasDefaultValue(new DateTime(2023, 6, 6, 20, 0, 21, 273, DateTimeKind.Local).AddTicks(6828));
 
                     b.Property<bool>("IsComplete")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
