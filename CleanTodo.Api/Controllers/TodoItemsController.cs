@@ -56,5 +56,14 @@ namespace CleanTodo.Api.Controllers
         {
             return Ok(await _mediator.Send(new SetTodoItemCompletionStatusCommand(id, completionStatus)));
         }
+
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
+        [HttpPut("AssignToList")]
+        public async Task<IActionResult> AssignToList(AssignTodoItemRequest request)
+        {
+            await _mediator.Send(new AssignTodoItemCommand(request));
+            return NoContent();
+        }
     }
 }
