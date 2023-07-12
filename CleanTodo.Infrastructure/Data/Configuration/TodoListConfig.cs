@@ -18,6 +18,7 @@ namespace CleanTodo.Infrastructure.Data.Configuration
             builder.Property(x => x.DueDate).HasDefaultValueSql("GETDATE()");
             builder.Property(x => x.ActivationDate).HasDefaultValueSql("GETDATE()");
             builder.HasMany(x => x.TodoItems);
+            builder.Navigation(x => x.TodoItems).AutoInclude();
         }
     }
 }
