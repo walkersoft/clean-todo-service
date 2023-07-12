@@ -1,6 +1,7 @@
 ﻿using CleanTodo.Core.Application.Commands.TodoItems;
 using CleanTodo.Core.Application.Commands.TodoLists;
 using CleanTodo.Core.Application.Queries.TodoItems;
+using CleanTodo.Core.Application.Queries.TodoLists;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,10 @@ namespace CleanTodo.IntegrationTests.Application.Commands.TodoItems
             await _mediator.Send(new AssignTodoItemCommand(assignTodoItemRequest));
             _dbContext.ChangeTracker.Clear();
 
-            var getListResponse = await _mediator.Send(new GetAllTodoItemsQuery());
+            var getListResponse = await _mediator.Send(new GetAllTodoListsQuery());
 
-            getListResponse.Any(todoItem => todoItem.Id == createTodoItemResponse.Id)
+            getListResponse.SelectMany(lists => lists.TodoItems)
+                .Any(itemId => itemId == createTodoItemResponse.Id)
                 .Should().BeTrue();
         }
     }

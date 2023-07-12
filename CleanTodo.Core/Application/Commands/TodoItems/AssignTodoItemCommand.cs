@@ -22,7 +22,8 @@ namespace CleanTodo.Core.Application.Commands.TodoItems
             var todoList = await _context.FirstOrNotFound<TodoList>(request.Data.TodoListId);
 
             todoList.TodoItems.Add(todoItem);
-            _context.TodoLists.Update(todoList);
+            _context.TodoItems.Update(todoItem);
+            await _context.SaveChangesAsync();
 
             return await Unit.Task;
         }
