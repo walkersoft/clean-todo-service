@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanTodo.Core.Behaviors;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,6 +17,7 @@ namespace CleanTodo.Core.Configuration
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DebugNotificationBehavior<,>));
         }
     }
 }
